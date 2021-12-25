@@ -69,34 +69,6 @@ public class Main {
         }
         System.out.println(score);
     }
-    /*
-     * ArrayList<String> filelines = readFile("data.txt");
-     * Vector<Vector<Integer>> array_2d = new Vector<Vector<Integer>>();
-     * int[] blast_area_i = { 1, 1, 1, 0, 0, -1, -1, -1 };
-     * int[] blast_area_j = { 1, 0, -1, 1, -1, 1, 0, -1 };
-     * 
-     * for (int i = 0; i < filelines.size(); i++) {
-     * Vector<Integer> buffer_array = new Vector<Integer>();
-     * String[] buffer_string = filelines.get(i).split("|");
-     * for (int j = 0; j < buffer_string.length; j++) {
-     * buffer_array.add(Integer.parseInt(buffer_string[j]));
-     * }
-     * array_2d.add(buffer_array);
-     * }
-     * int step = 100;
-     * for (int s = 0; s < step; s++) {
-     * for (int i = 0; i < array_2d.size(); i++) {
-     * for (int j = 0; j < array_2d.get(0).size(); j++) {
-     * array_2d.get(i).set(j, array_2d.get(i).get(j) + 1);
-     * }
-     * }
-     * for (int i = 0; i < array_2d.size(); i++) {
-     * for (int j = 0; j < array_2d.get(0).size(); j++) {
-     * 
-     * }
-     * }
-     * }
-     */
 
     static void question_2() {
         ArrayList<String> filelines = readFile("data.txt");
