@@ -75,7 +75,7 @@ public class Main {
                 int amount = Integer.parseInt(buffer[1]);
                 if (direction.equals("y")) {
                     int reverse_index = amount;
-                    for (int j = amount + 1; j < instructions.size(); j++) {
+                    for (int j = amount + 1; j < amount * 2; j++) {
                         reverse_index -= 1;
                         for (int k = 0; k < instructions.get(j).size(); k++) {
                             instructions.get(reverse_index).set(k,
@@ -85,7 +85,7 @@ public class Main {
                     }
                 } else {
                     for (int j = 0; j < instructions.size(); j++) {
-                        for (int k = amount; k < instructions.get(j).size(); k++) {
+                        for (int k = amount; k < amount * 2; k++) {
                             int temp = instructions.get(j).get(k);
                             instructions.get(j).set(k, 0);
                             int reverse_index = amount - (k - amount);
@@ -110,6 +110,8 @@ public class Main {
         ArrayList<ArrayList<Integer>> instructions = new ArrayList<ArrayList<Integer>>();
         Boolean first_parser = true;
         int highest_x = 0;
+        int lowest_x_folder = 999;
+        int lowest_y_folder = 999;
         int count = 0;
         int instruction_count = 0;
         for (int i = 0; i < filelines.size(); i++) {
@@ -150,8 +152,14 @@ public class Main {
                 int amount = Integer.parseInt(buffer[1]);
                 if (direction.equals("y")) {
                     int reverse_index = amount;
-                    for (int j = amount + 1; j < amount * 2; j++) {
+                    if (lowest_y_folder > amount) {
+                        lowest_y_folder = amount;
+                    }
+                    for (int j = amount + 1; j < amount * 2 + 1; j++) {
                         reverse_index -= 1;
+                        if (j == instructions.size()) {
+                            break;
+                        }
                         for (int k = 0; k < instructions.get(j).size(); k++) {
                             instructions.get(reverse_index).set(k,
                                     instructions.get(reverse_index).get(k) | instructions.get(j).get(k));
@@ -159,8 +167,11 @@ public class Main {
                         }
                     }
                 } else {
+                    if (lowest_x_folder > amount) {
+                        lowest_x_folder = amount;
+                    }
                     for (int j = 0; j < instructions.size(); j++) {
-                        for (int k = amount; k < amount * 2; k++) {
+                        for (int k = amount; k < amount * 2 + 1; k++) {
                             int temp = instructions.get(j).get(k);
                             instructions.get(j).set(k, 0);
                             int reverse_index = amount - (k - amount);
@@ -171,8 +182,8 @@ public class Main {
             }
 
         }
-        for (int j = 0; j < 6; j++) {
-            System.out.println(instructions.get(j).subList(0, 40).toString());
+        for (int j = 0; j < lowest_y_folder; j++) {
+            System.out.println(instructions.get(j).subList(0, lowest_x_folder).toString());
         }
     }
 
