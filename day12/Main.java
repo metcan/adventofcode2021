@@ -52,7 +52,7 @@ public class Main {
     }
 
     static int travel_paths_2(Map<String, ArrayList<String>> graph, Map<String, Integer> small_caves, String from,
-            String to, List<String> local_path) {
+            String to, List<String> local_path, int lock) {
         if (from.equals(to)) {
             System.out.println(local_path);
             return 1;
@@ -60,25 +60,32 @@ public class Main {
             int total_path = 0;
             for (String i : graph.get(from)) {
                 int visit_limit = 2;
-                if (small_caves.containsKey(i)) {
-                    /*
-                     * for (Map.Entry<String, Integer> set : small_caves.entrySet()) {
-                     * if (set.getValue() == 2 && set.getKey() != i) {
-                     * visit_limit = 1;
-                     * }
-                     * }
-                     */
+                if (lock == 1)
+                {
+                    visit_limit = 1;
                 }
                 if ((small_caves.containsKey(i) && small_caves.get(i) >= visit_limit)) {
-                    return total_path;
+                    continue;
                 }
                 local_path.add(i);
                 if (small_caves.containsKey(i))
+                {
                     small_caves.put(i, small_caves.get(i) + 1);
+                    if (small_caves.get(i)==2)
+                    {
+                        lock = 1;
+                    }
+                }
                 System.out.println(local_path);
-                total_path += travel_paths_2(graph, small_caves, i, to, local_path);
+                total_path += travel_paths_2(graph, small_caves, i, to, local_path, lock);
                 if (small_caves.containsKey(i))
+                {
+                    if (small_caves.get(i)==2)
+                    {
+                        lock = 0;
+                    }
                     small_caves.put(i, small_caves.get(i) - 1);
+                }
                 local_path.remove(local_path.size() - 1);
 
             }
@@ -126,7 +133,7 @@ public class Main {
     }
 
     static void question_2() {
-        ArrayList<String> filelines = readFile("test_set_3.txt");
+        ArrayList<String> filelines = readFile("data.txt");
         Map<String, ArrayList<String>> graph = new HashMap<String, ArrayList<String>>();
         Map<String, Integer> small_caves = new HashMap<String, Integer>();
         for (int i = 0; i < filelines.size(); i++) {
@@ -161,8 +168,9 @@ public class Main {
         String end_check = "end";
         List<String> travel_list = new ArrayList<String>();
         travel_list.add(start_check);
-        small_caves.put(start_check, 2);
-        int test = travel_paths_2(graph, small_caves, start_check, end_check, travel_list);
+        small_caves.put(start_check, 3);
+        int lock = 0;
+        int test = travel_paths_2(graph, small_caves, start_check, end_check, travel_list, lock);
         System.out.println(test);
     }
 
