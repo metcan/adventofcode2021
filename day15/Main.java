@@ -2,16 +2,14 @@ import java.io.File; // Import the File class
 import java.io.FileNotFoundException; // Import this class to handle errors
 import java.nio.Buffer;
 import java.util.Deque;
+import java.util.ArrayDeque;
 import java.util.HashMap;
 import java.util.Scanner; // Import the Scanner class to read text files
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Vector;
-
-import javax.lang.model.util.ElementScanner14;
-import javax.swing.text.html.HTMLDocument.BlockElement;
-import javax.swing.text.html.HTMLDocument.HTMLReader.IsindexAction;
-
+import java.util.Queue;
+import java.util.PriorityQueue; 
 import java.util.Map;
 import java.util.List;
 
@@ -119,7 +117,7 @@ public class Main {
                 }
             }
         }
-        ArrayList<int[]> search_stack = new ArrayList<int[]>();
+        Deque<int[]> search_stack = new ArrayDeque<>();
         int[] start_location = {0,0};
         new_weight[0][0] = 0;
         search_stack.add(start_location);
@@ -129,7 +127,7 @@ public class Main {
         int max_j_size = map.get(0).size() * 5;
         while(!(search_stack.isEmpty()))
         {
-            int[] current_node = search_stack.remove(search_stack.size()-1);
+            int[] current_node = search_stack.poll();
             for(int i=0; i<x_search.length; i++)
             {
                 int ni = current_node[0] + x_search[i];
